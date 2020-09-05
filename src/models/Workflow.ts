@@ -1,4 +1,13 @@
 /**
+ * ## App state
+ */
+export interface AppState {
+    loading: boolean;
+    loggedIn: boolean;
+    list: Workflow[];
+}
+
+/**
  * ## Workflow interface
  */
 export interface Workflow {

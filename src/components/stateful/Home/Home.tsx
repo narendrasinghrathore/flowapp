@@ -2,11 +2,10 @@ import React from 'react';
 import { Grid, Paper, Box } from '@material-ui/core';
 import './Home.scss';
 import { Workflow } from '../../../models/Workflow';
-import uid from 'uid';
 
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const WorkFlowIcon = React.memo((props: { status: 0 | 1, update: () => void }) => {
     return props.status === 0 ?
@@ -16,31 +15,7 @@ const WorkFlowIcon = React.memo((props: { status: 0 | 1, update: () => void }) =
 
 const Home = React.memo(() => {
 
-    const history = useHistory();
-
-    const items: Workflow[] = [{
-        id: uid(),
-        nodes: [],
-        status: 1,
-        title: 'Firebase Actions'
-    },
-    {
-        id: uid(),
-        nodes: [],
-        status: 1,
-        title: 'Netifly Actions'
-    },
-    {
-        id: uid(),
-        nodes: [],
-        status: 0,
-        title: 'Jenkin Actions'
-    }];
-
-    const handleNavigation = (id: string) => {
-        history.push(`/flow/${id}`);
-    }
-
+    const items: Workflow[] = [];
 
     const completeWorkFlow = (id: string) => {
         console.log(id);
