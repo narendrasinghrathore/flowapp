@@ -1,0 +1,20 @@
+.card-container {
+  font-size: 1em;
+  .cards-wrapper {
+    margin: 20px;
+
+    .card {
+      max-width: 200px;
+      height: 100px;
+      padding: 5px 10px;
+
+      .heading {
+        margin: 10 auto;
+      }
+
+      &:hover {
+        box-shadow: 0 2px 2px 2px #999;
+      }
+    }
+  }
+}
