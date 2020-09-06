@@ -1,11 +1,12 @@
 .card-container {
   font-size: 1em;
+  margin:0;
   .cards-wrapper {
-    margin: 20px;
+    // margin: 20px;
 
     .card {
       max-width: 200px;
-      height: 100px;
+      height: 150px;
       padding: 5px 10px;
 
       .heading {

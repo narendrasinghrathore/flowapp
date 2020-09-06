@@ -1,27 +1,64 @@
+import { Workflow } from "../../models/Workflow";
+
 const APP = '[APP] Authentication';
 
-export const APP_LOGIN_INIT = `${APP} : Login INIT`;
+const APP_LOGIN_INIT = `${APP} : Login INIT`;
 
-export const APP_LOGIN_SUCCESS = `${APP} : Login Success`;
+const APP_LOGIN_SUCCESS = `${APP} : Login Success`;
 
-export const APP_LOGOUT = `${APP} : Logout`;
+const APP_LOGOUT = `${APP} : Logout`;
 
-export const APP_ADD_WORKFLOW = `${APP} : Add Workflow`;
+const APP_ADD_WORKFLOW = `${APP} : Add Workflow`;
 
-export const APP_UPDATE_WORKFLOW = `${APP} : Add Update Workflow`;
+const APP_UPDATE_WORKFLOW = `${APP} : Add Update Workflow`;
 
-export const APP_DELETE_WORKFLOW = `${APP} : Add Delete Workflow`;
+const APP_DELETE_WORKFLOW = `${APP} : Add Delete Workflow`;
 
 
-export const actionAuthInit = (email: string): { type: string, payload: { email: string } } => ({
+const actionAuthInit = (email: string): { type: string, payload: { email: string } } => ({
     type: APP_LOGIN_INIT,
     payload: { email }
 });
 
-export const actionAuthSuccess = (): { type: string } => ({
+const actionAuthSuccess = (): { type: string } => ({
     type: APP_LOGIN_SUCCESS
 });
 
-export const actionAuthLogout = (): { type: string } => ({
+const actionAuthLogout = (): { type: string } => ({
     type: APP_LOGOUT
 });
+
+
+const actionAddWorkflow = (payload: Workflow): { type: string, payload: Workflow } => ({
+    type: APP_ADD_WORKFLOW,
+    payload
+});
+
+
+
+const actionUpdateWorkflow = (payload: Workflow): { type: string, payload: Workflow } => ({
+    type: APP_UPDATE_WORKFLOW,
+    payload
+});
+
+
+const actionDeleteWorkflow = (payload: Workflow): { type: string, payload: Workflow } => ({
+    type: APP_DELETE_WORKFLOW,
+    payload
+});
+
+
+export {
+    APP_LOGIN_INIT,
+    APP_LOGIN_SUCCESS,
+    APP_LOGOUT,
+    APP_ADD_WORKFLOW,
+    APP_UPDATE_WORKFLOW,
+    APP_DELETE_WORKFLOW,
+    actionAuthInit,
+    actionAuthSuccess,
+    actionAuthLogout,
+    actionAddWorkflow,
+    actionUpdateWorkflow,
+    actionDeleteWorkflow
+}

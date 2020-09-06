@@ -27,19 +27,6 @@ const initialState: FlowState = {
             title: 'Backed by Google, trusted by top apps'
         },
         {
-            content: `Firebase products work great individually 
-            but share data and insights, so they work even better together.`,
-            id: uid(),
-            status: 2,
-            title: 'One platform, with products that work better together'
-        },
-        {
-            content: `Before releasing a new feature, test it on a subset of your user base to see how it works and how they respond.`,
-            id: uid(),
-            status: 2,
-            title: 'Progressively roll out new features'
-        },
-        {
             content: `Give users a simple, secure way to sign into your app, then monitor the onboarding process and find ways to improve it`,
             id: uid(),
             status: 2,
@@ -56,14 +43,42 @@ const initialState: FlowState = {
     },
     {
         id: uid(),
-        nodes: [],
+        nodes: [
+            {
+                content: `Firebase products work great individually 
+                but share data and insights, so they work even better together.`,
+                id: uid(),
+                status: 2,
+                title: 'One platform, with products that work better together'
+            },
+            {
+                content: `Before releasing a new feature, test it on a subset of your user base to see how it works and how they respond.`,
+                id: uid(),
+                status: 2,
+                title: 'Progressively roll out new features'
+            },],
         status: 1,
         title: 'Netifly Actions'
     },
     {
         id: uid(),
-        nodes: [],
-        status: 0,
+        nodes: [
+
+            {
+                content: `Firebase products work great individually 
+            but share data and insights, so they work even better together.`,
+                id: uid(),
+                status: 2,
+                title: 'One platform, with products that work better together'
+            },
+            {
+                content: `Before releasing a new feature, test it on a subset of your user base to see how it works and how they respond.`,
+                id: uid(),
+                status: 2,
+                title: 'Progressively roll out new features'
+            },
+        ],
+        status: 1,
         title: 'Jenkin Actions'
     }]
 };
@@ -96,7 +111,7 @@ const flowReducer = (state: FlowState = initialState, action: { type: string, pa
 
         case APP_UPDATE_WORKFLOW: {
             const data: Workflow = action.payload;
-            const list: Workflow[] = JSON.parse(JSON.stringify(state));
+            const list: Workflow[] = JSON.parse(JSON.stringify(state.list));
             const index = list.findIndex(item => item.id === data.id);
             if (index > -1) list[index] = data;
             return { ...state, list };
@@ -104,7 +119,7 @@ const flowReducer = (state: FlowState = initialState, action: { type: string, pa
 
         case APP_DELETE_WORKFLOW: {
             const data: Workflow = action.payload;
-            const list: Workflow[] = JSON.parse(JSON.stringify(state));
+            const list: Workflow[] = JSON.parse(JSON.stringify(state.list));
             const index = list.findIndex(item => item.id === data.id);
             if (index > -1) list.splice(index, 1);
             return { ...state, list };

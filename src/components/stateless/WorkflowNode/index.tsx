@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const WorkFlowNode = React.memo((props: { item: WorkflowNode, update: (item: WorkflowNode) => void }) => {
+const WorkFlowNode = React.memo((props: { item: WorkflowNode, update: (item: WorkflowNode) => void, register: Function }) => {
 
   const [item, setItem] = useState<WorkflowNode>(props.item);
 
@@ -73,7 +73,10 @@ const WorkFlowNode = React.memo((props: { item: WorkflowNode, update: (item: Wor
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement> | React.FormEvent<HTMLDivElement>) => {
     const target = (event.target || event.currentTarget) as HTMLInputElement;
     const { name, value } = target;
-    setItem({ ...item, [name]: value });
+    if (!name && !value) return;
+    // i.e. {ID}-title
+    const title = name.split("-")[1];
+    setItem({ ...item, [title]: value });
   }
 
   const handleStatusChange = (event: any) => {
@@ -83,7 +86,7 @@ const WorkFlowNode = React.memo((props: { item: WorkflowNode, update: (item: Wor
 
   useEffect(() => {
     props.update(item);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item]);
 
   return (
@@ -91,7 +94,6 @@ const WorkFlowNode = React.memo((props: { item: WorkflowNode, update: (item: Wor
       <CardHeader
         title={
           <TextField
-            id="outlined-multiline-static"
             label="Title"
             fullWidth
             multiline
@@ -99,21 +101,22 @@ const WorkFlowNode = React.memo((props: { item: WorkflowNode, update: (item: Wor
             rows={2}
             defaultValue={item?.title}
             variant="outlined"
-            name="title"
+            name={`${item.id}-title`}
             onInput={e => handleInputChange(e)}
+            inputRef={props.register({ required: true })}
           />
         }
       />
       <TextField
-        id="outlined-multiline-static"
         label="Content"
         multiline
         className={classes.text}
         rows={10}
         defaultValue={item?.content}
         variant="outlined"
-        name="content"
+        name={`${item.id}-content`}
         onInput={e => handleInputChange(e)}
+        inputRef={props.register({ required: true })}
       />
       <CardActions disableSpacing className={classes.bottomActions}>
         <IconButton name="status" onClick={(e) => handleStatusChange(e)} className={classes.status} aria-label="Status">
