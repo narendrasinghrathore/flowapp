@@ -21,6 +21,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import SaveIcon from '@material-ui/icons/Save';
 import { green, red, blue, deepPurple } from '@material-ui/core/colors';
 import { actionAddWorkflow, actionUpdateWorkflow } from '../../../store/actions/auth.action';
+import { shuffle } from '../../../utils';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -137,6 +138,11 @@ const WorkFlowComponent = React.memo(() => {
 
     }, [workflow]);
 
+    const shuffleNodes = () => {
+        const nodes = shuffle(workflow.nodes);
+        setWorkflow({ ...workflow, nodes });
+    }
+
 
     return <>
         <form onSubmit={handleSubmit(saveWorkFlow)}>
@@ -149,7 +155,7 @@ const WorkFlowComponent = React.memo(() => {
                         <Grid item xs={3}>
                             {
                                 canShuffle &&
-                                <IconButton aria-label="shuffle" className={`${classes.margin} ${classes.shuffle}`}>
+                                <IconButton aria-label="shuffle" onClick={shuffleNodes} className={`${classes.margin} ${classes.shuffle}`}>
                                     <ShuffleIcon fontSize="large" />
                                 </IconButton>
                             }

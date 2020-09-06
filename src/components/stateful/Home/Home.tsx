@@ -86,8 +86,8 @@ const Home = React.memo(() => {
             </Box>
         </Box>
         <Grid container justify="center" className="card-container">
-            <Grid justify="center"
-                style={{ textAlign: 'center', margin: 10, boxSizing: 'border-box', verticalAlign:"" }} spacing={4} item xs={12}>
+            <Grid
+                style={{ textAlign: 'center', margin: 10, boxSizing: 'border-box', verticalAlign:"" }} item xs={12}>
                 <h1>
                     <ListIcon fontSize="large" />
                     Workflow(s)</h1>
