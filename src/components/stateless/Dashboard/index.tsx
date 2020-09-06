@@ -63,6 +63,7 @@ const Dashboard = React.memo(() => {
                     <Home />
                 </LazyLoadingComponent>
             </Route>
+
         </Switch>
 
 

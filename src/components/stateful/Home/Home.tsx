@@ -11,7 +11,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import ListIcon from '@material-ui/icons/List';
 
 import Chip from '@material-ui/core/Chip';
 

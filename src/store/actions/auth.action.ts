@@ -48,6 +48,7 @@ const actionDeleteWorkflow = (payload: Workflow): { type: string, payload: Workf
 });
 
 
+
 export {
     APP_LOGIN_INIT,
     APP_LOGIN_SUCCESS,
@@ -60,5 +61,5 @@ export {
     actionAuthLogout,
     actionAddWorkflow,
     actionUpdateWorkflow,
-    actionDeleteWorkflow
+    actionDeleteWorkflow,
 }
