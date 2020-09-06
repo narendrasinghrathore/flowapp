@@ -32,6 +32,24 @@ const initialState: FlowState = {
             id: uid(),
             status: 2,
             title: 'One platform, with products that work better together'
+        },
+        {
+            content: `Before releasing a new feature, test it on a subset of your user base to see how it works and how they respond.`,
+            id: uid(),
+            status: 2,
+            title: 'Progressively roll out new features'
+        },
+        {
+            content: `Give users a simple, secure way to sign into your app, then monitor the onboarding process and find ways to improve it`,
+            id: uid(),
+            status: 2,
+            title: 'Create a great onboarding flow'
+        },
+        {
+            content: `Implement a user-friendly chat feature, so that your users can chat with each other in realtime without leaving your app..`,
+            id: uid(),
+            status: 2,
+            title: 'Add chat to your app'
         }],
         status: 1,
         title: 'Firebase Actions'

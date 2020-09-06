@@ -7,7 +7,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import HomeIcon from '@material-ui/icons/Home';
 import createStyles from '@material-ui/core/styles/createStyles';
-import { BrowserRouter as Router, Route, useHistory, Switch } from 'react-router-dom';
+import { Route, useHistory, Switch } from 'react-router-dom';
 
 
 import LazyLoadingComponent from '../../../shared/components/LazyLoadingComponent';
