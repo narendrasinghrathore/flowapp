@@ -1,13 +1,36 @@
 .card-container {
   font-size: 1em;
-  margin:0;
+  margin: 0;
+
+  .title-background {
+    background: url("../../../assets/background.svg") no-repeat;
+    box-sizing: border-box;
+    background-size: 100% 100%;
+    height: 300px;
+  }
+
   .cards-wrapper {
-    // margin: 20px;
+    margin: 20px;
 
     .card {
-      max-width: 200px;
-      height: 150px;
+      a {
+        color: #444444;
+      }
+      a::before {
+        content: "#";
+      }
       padding: 5px 10px;
+      background: #ece9e6; /* fallback for old browsers */
+      background: -webkit-linear-gradient(
+        to right,
+        #ffffff,
+        #ece9e6
+      ); /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(
+        to right,
+        #ffffff,
+        #ece9e6
+      ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
       .heading {
         margin: 10 auto;

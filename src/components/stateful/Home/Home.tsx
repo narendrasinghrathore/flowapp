@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Grid, Paper, Box, Button } from '@material-ui/core';
+
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Box, Button } from '@material-ui/core';
 import './Home.scss';
 import { Workflow, AppState } from '../../../models/Workflow';
 import AddIcon from '@material-ui/icons/Add';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -12,16 +13,36 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import ListIcon from '@material-ui/icons/List';
 
+import Chip from '@material-ui/core/Chip';
+
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { getWorkflowList } from '../../../store/selectors/flow.selector';
 import { actionUpdateWorkflow } from '../../../store/actions/auth.action';
 
+const useStyles = makeStyles({
+    title: {
+        fontSize: 14,
+    },
+});
+
 const WorkFlowIcon = React.memo((props: { status: 0 | 1, update: () => void }) => {
-    return props.status === 0 ?
-        <CheckBoxIcon onClick={() => props.update()} />
-        : <CheckBoxOutlineBlankIcon onClick={() => props.update()} />
+    return <IconButton name="status"
+        style={{ color: props.status === 0 ? 'green' : 'grey' }}
+        onClick={() => props.update()} aria-label="Status">
+        {props.status === 0 ?
+            <CheckCircleIcon fontSize="large" />
+            : <CheckBoxOutlineBlankIcon fontSize="large" />}
+    </IconButton>;
 });
 
 const Home = React.memo(() => {
+
+    const classes = useStyles();
 
     const [open, setOpen] = useState(false);
     const [selectedWorkflow, setSelectedWorkflow] = useState<Workflow>();
@@ -85,32 +106,32 @@ const Home = React.memo(() => {
                 </Button>
             </Box>
         </Box>
-        <Grid container justify="center" className="card-container">
-            <Grid
-                style={{ textAlign: 'center', margin: 10, boxSizing: 'border-box', verticalAlign:"" }} item xs={12}>
-                <h1>
-                    <ListIcon fontSize="large" />
-                    Workflow(s)</h1>
+        <Grid container className="card-container">
+            <Grid className="title-background" item xs={12}>
             </Grid>
-            {items.map(item => {
-                return <Grid item xs={3} key={item.id} className="cards-wrapper" >
-                    <Paper elevation={1} className="card">
-                        <h4 className="heading">
-                            <Link to={`/flow/${item.id}`}>
-                                {item.title}
-                            </Link>
-                        </h4>
-                        <Grid container spacing={2}>
-                            <Grid item xs={6}>
-                                {item.status === 0 ? 'COMPLETED' : 'PENDING'}
-                            </Grid>
-                            <Grid item xs={6}>
+            {
+                items.map((item, index) => {
+                    return <Grid item xs={3} key={item.id} className="cards-wrapper" >
+                        <Card className={`card`}>
+                            <CardContent>
+                                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                    {`#${index + 1}`}
+                                </Typography>
+                                <Typography variant="h5" component="h2">
+                                    <Link to={`/flow/${item.id}`}>
+                                        {item.title}
+                                    </Link>
+                                </Typography>
+
+                            </CardContent>
+                            <CardActions>
+                                <Chip label={item.status === 0 ? 'COMPLETED' : 'PENDING'} />
                                 <WorkFlowIcon update={() => completeWorkFlow(item.id)} {...item} />
-                            </Grid>
-                        </Grid>
-                    </Paper>
-                </Grid>
-            })
+                            </CardActions>
+                        </Card>
+                    </Grid>
+                })
+
             }
 
         </Grid>

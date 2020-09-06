@@ -47,7 +47,7 @@ const Dashboard = React.memo(() => {
                     <HomeIcon />
                 </IconButton>
                 <Typography variant="h6" className={classes.title}>
-                    WorkFlow
+                    WorkFlows
           </Typography>
             </Toolbar>
         </AppBar>
