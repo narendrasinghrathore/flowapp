@@ -6,4 +6,3 @@ const composedEnhancers: any =
         ? composeWithDevTools({})
         : compose();
 export default createStore(rootReducer, {}, composedEnhancers());
-

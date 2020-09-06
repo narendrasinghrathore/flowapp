@@ -1,7 +1,11 @@
-/**
- * ## App state
- */
 export interface AppState {
+    flow: FlowState
+}
+
+/**
+ * ## Flow state
+ */
+export interface FlowState {
     loading: boolean;
     loggedIn: boolean;
     list: Workflow[];
@@ -11,7 +15,7 @@ export interface AppState {
  * ## Workflow interface
  */
 export interface Workflow {
-    [key: string]: string | number | Nodes[];
+    [key: string]: string | number | WorkflowNode[];
     /**
      * ### Workflow unique ID
      * @type {string}
@@ -33,13 +37,13 @@ export interface Workflow {
     /**
      * ### Nodes array
      */
-    nodes: Nodes[];
+    nodes: WorkflowNode[];
 }
 /**
  * ## Sub node of a Workflow interface
  * 
  */
-export interface Nodes {
+export interface WorkflowNode {
     [key: string]: string | number;
     /**
      * ID
@@ -59,6 +63,12 @@ export interface Nodes {
      * 2. 1 is pending
      * 3. 2 is progress
      */
-    status: 0 | 1 | 2;
+    status: WorkflowNodeStatus;
 
 }
+
+export enum WorkflowNodeStatus {
+    complete = 0,
+    progress = 1,
+    pending = 2
+} 

@@ -2,27 +2,25 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect,
 } from "react-router-dom";
-import Home from '../components/stateful/Home/Home';
-import LazyLoadingComponent from '../shared/components/LazyLoadingComponent';
 
-const WorkFlowComponent = React.lazy(() => import('../components/stateful/Workflow'));
+import Dashboard from '../components/stateless/Dashboard';
+
+
+
 
 export default function Routes() {
+
   return (
     <Router>
       <div>
         <Switch>
-          <Route path="/home">
-            <Home />
+          <Route path="/">
+            <Dashboard />
           </Route>
-          <Route path="/flow/:id">
-            <LazyLoadingComponent>
-              <WorkFlowComponent />
-            </LazyLoadingComponent>
-          </Route>
-
+          <Redirect to="/" />
         </Switch>
       </div>
     </Router>

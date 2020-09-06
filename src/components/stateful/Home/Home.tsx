@@ -1,11 +1,13 @@
 import React from 'react';
 import { Grid, Paper, Box } from '@material-ui/core';
 import './Home.scss';
-import { Workflow } from '../../../models/Workflow';
+import { Workflow, AppState } from '../../../models/Workflow';
 
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { getWorkflowList } from '../../../store/selectors/flow.selector';
 
 const WorkFlowIcon = React.memo((props: { status: 0 | 1, update: () => void }) => {
     return props.status === 0 ?
@@ -15,7 +17,7 @@ const WorkFlowIcon = React.memo((props: { status: 0 | 1, update: () => void }) =
 
 const Home = React.memo(() => {
 
-    const items: Workflow[] = [];
+    const items: Workflow[] = useSelector((state: AppState) => getWorkflowList(state));
 
     const completeWorkFlow = (id: string) => {
         console.log(id);

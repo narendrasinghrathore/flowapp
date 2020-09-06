@@ -1,17 +1,38 @@
 
 import uid from 'uid';
-import { Workflow, AppState } from '../../models/Workflow';
+import { Workflow, FlowState } from '../../models/Workflow';
 import { APP_ADD_WORKFLOW, APP_UPDATE_WORKFLOW, APP_DELETE_WORKFLOW, APP_LOGIN_INIT, APP_LOGIN_SUCCESS, APP_LOGOUT } from '../actions/auth.action';
 
 /**
  * Initial State
  */
-const initialState: AppState = {
+const initialState: FlowState = {
     loading: false,
     loggedIn: false,
     list: [{
         id: uid(),
-        nodes: [],
+        nodes: [{
+            content: `Firebase gives you functionality like analytics, 
+            databases, messaging and crash reporting so you can move quickly
+             and focus on your users.`,
+            id: uid(),
+            status: 0,
+            title: 'Build apps fast, without managing infrastructure'
+        },
+        {
+            content: `Firebase is built on Google infrastructure and 
+            scales automatically, for even the largest apps..`,
+            id: uid(),
+            status: 1,
+            title: 'Backed by Google, trusted by top apps'
+        },
+        {
+            content: `Firebase products work great individually 
+            but share data and insights, so they work even better together.`,
+            id: uid(),
+            status: 2,
+            title: 'One platform, with products that work better together'
+        }],
         status: 1,
         title: 'Firebase Actions'
     },
@@ -29,7 +50,7 @@ const initialState: AppState = {
     }]
 };
 
-const flowReducer = (state: AppState = initialState, action: { type: string, payload: Workflow }): AppState => {
+const flowReducer = (state: FlowState = initialState, action: { type: string, payload: Workflow }): FlowState => {
     switch (action.type) {
 
         case APP_LOGIN_INIT: {
