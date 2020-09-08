@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { WorkflowNode } from "../../../models/Workflow";
+import { IWorkflowNode } from "../../../models/Workflow";
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -49,9 +49,9 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const WorkFlowNode = React.memo((props: { item: WorkflowNode, update: (item: WorkflowNode) => void, register: Function }) => {
+const WorkFlowNode = React.memo((props: { item: IWorkflowNode, update: (item: IWorkflowNode) => void, register: Function }) => {
 
-  const [item, setItem] = useState<WorkflowNode>(props.item);
+  const [item, setItem] = useState<IWorkflowNode>(props.item);
 
   /**
    * Return color based on status

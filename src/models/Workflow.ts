@@ -15,7 +15,7 @@ export interface FlowState {
  * ## Workflow interface
  */
 export interface Workflow {
-    [key: string]: string | number | WorkflowNode[];
+    [key: string]: string | number | IWorkflowNode[];
     /**
      * ### Workflow unique ID
      * @type {string}
@@ -37,13 +37,13 @@ export interface Workflow {
     /**
      * ### Nodes array
      */
-    nodes: WorkflowNode[];
+    nodes: IWorkflowNode[];
 }
 /**
  * ## Sub node of a Workflow interface
  * 
  */
-export interface WorkflowNode {
+export interface IWorkflowNode {
     [key: string]: string | number;
     /**
      * ID

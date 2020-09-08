@@ -1,9 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { AppState, WorkflowNode, Workflow } from '../../../models/Workflow';
+import { AppState, IWorkflowNode, Workflow } from '../../../models/Workflow';
 import { getSelectedWorkFlow } from '../../../store/selectors/flow.selector';
-import WorkFlowNode from '../../stateless/WorkflowNode';
 import uid from 'uid';
 import Box from '@material-ui/core/Box';
 import { Paper, Grid, TextField, Typography } from '@material-ui/core';
@@ -22,6 +21,12 @@ import SaveIcon from '@material-ui/icons/Save';
 import { green, red, blue, deepPurple } from '@material-ui/core/colors';
 import { actionAddWorkflow, actionUpdateWorkflow } from '../../../store/actions/auth.action';
 import { shuffle } from '../../../utils';
+import LazyLoadingComponent from '../../../shared/components/LazyLoadingComponent';
+
+/**Lazy loading component(s) */
+
+const WorkFlowNode = React.lazy(() => import('../../stateless/WorkflowNode'));
+
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -89,20 +94,20 @@ const WorkFlowComponent = React.memo(() => {
     const workflowNoNodes = workflow.nodes.length === 0 ? true : false
 
 
-    const updateNode = (item: WorkflowNode, index: number) => {
-        const nodes = JSON.parse(JSON.stringify(workflow.nodes)) as WorkflowNode[];
+    const updateNode = (item: IWorkflowNode, index: number) => {
+        const nodes = JSON.parse(JSON.stringify(workflow.nodes)) as IWorkflowNode[];
         nodes[index] = item;
         setWorkflow({ ...workflow, nodes });
     }
 
     const addNewNode = () => {
-        const nodes = JSON.parse(JSON.stringify(workflow.nodes)) as WorkflowNode[];
+        const nodes = JSON.parse(JSON.stringify(workflow.nodes)) as IWorkflowNode[];
         nodes.push({ title: '', status: 2, content: '', id: uid() });
         setWorkflow({ ...workflow, nodes });
     }
 
     const removeNode = () => {
-        const nodes = JSON.parse(JSON.stringify(workflow.nodes)) as WorkflowNode[];
+        const nodes = JSON.parse(JSON.stringify(workflow.nodes)) as IWorkflowNode[];
         nodes.pop();
         setWorkflow({ ...workflow, nodes });
     }
@@ -180,9 +185,11 @@ const WorkFlowComponent = React.memo(() => {
             }
             <Box display="flex" className={classes.nodeItems} justifyItems="center" m={3} p={0} bgcolor="background.paper" >
 
-                {workflow.nodes.map((node: WorkflowNode, index: number) => {
+                {workflow.nodes.map((node: IWorkflowNode, index: number) => {
                     return <Box p={1} key={node.id}>
-                        <WorkFlowNode register={register} update={(item) => updateNode(item, index)} item={node} />
+                        <LazyLoadingComponent>
+                            <WorkFlowNode register={register} update={(item) => updateNode(item, index)} item={node} />
+                        </LazyLoadingComponent>
                     </Box>
                 })}
 

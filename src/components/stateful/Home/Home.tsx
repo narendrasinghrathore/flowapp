@@ -1,66 +1,37 @@
 import React, { useState, useMemo } from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Box, Button, TextField } from '@material-ui/core';
 import './Home.scss';
 import { Workflow, AppState } from '../../../models/Workflow';
 import AddIcon from '@material-ui/icons/Add';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 
-import Chip from '@material-ui/core/Chip';
-
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-
-import Grow from '@material-ui/core/Grow';
-
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { getWorkflowList } from '../../../store/selectors/flow.selector';
 import { actionUpdateWorkflow } from '../../../store/actions/auth.action';
+import LazyLoadingComponent from '../../../shared/components/LazyLoadingComponent';
 
-const useStyles = makeStyles({
-    title: {
-        fontSize: 14,
-    },
-});
+const WorkflowItem = React.lazy(() => import('../../stateless/WorkflowItem/WorkflowItem'));
+const SnackNotification = React.lazy(() => import('../../stateless/SnackNotification/SnackNotification'));
 
-const WorkFlowIcon = React.memo((props: { status: 0 | 1, update: () => void }) => {
-    return <IconButton name="status"
-        style={{ color: props.status === 0 ? 'green' : 'grey' }}
-        onClick={() => props.update()} aria-label="Status">
-        {props.status === 0 ?
-            <CheckCircleIcon fontSize="large" />
-            : <CheckBoxOutlineBlankIcon fontSize="large" />}
-    </IconButton>;
-});
 
+/**
+ * ## Description: Home Component
+ * i.e. Route "/"
+ */
 const Home = React.memo(() => {
-
-    const classes = useStyles();
 
     const [open, setOpen] = useState(false);
     const [selectedWorkflow, setSelectedWorkflow] = useState<Workflow>();
 
     const [filter, setFilter] = useState('');
 
-
     const showMessage = () => {
         setOpen(true);
 
     };
 
-    const onMessageHide = (event: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-
+    const onMessageHide = () => {
         setOpen(false);
         setSelectedWorkflow(undefined);
     };
@@ -119,57 +90,23 @@ const Home = React.memo(() => {
             </Box>
         </Box>
         <Grid container className="card-container">
+            {/* Background container */}
             <Grid className="title-background" item xs={12}>
             </Grid>
             {
                 list.map((item, index) => {
-                    return <Grid item xs={3} key={item.id} className="cards-wrapper" >
-                        <Grow in={item.id ? true : false}>
-                            <Card className={`card`}>
-                                <CardContent>
-                                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                        {`#${index + 1}`}
-                                    </Typography>
-                                    <Typography variant="h5" component="h2">
-                                        <Link to={`/flow/${item.id}`}>
-                                            {item.title}
-                                        </Link>
-                                    </Typography>
-
-                                </CardContent>
-                                <CardActions>
-                                    <Chip label={item.status === 0 ? 'COMPLETED' : 'PENDING'} />
-                                    <WorkFlowIcon update={() => completeWorkFlow(item.id)} {...item} />
-                                </CardActions>
-                            </Card>
-                        </Grow>
-                    </Grid>
+                    return <LazyLoadingComponent items={[{ width: 300 , height:200}]} key={item.id}>
+                        <WorkflowItem item={item} index={index} completeWorkFlow={completeWorkFlow} />
+                    </LazyLoadingComponent>
                 })
 
             }
 
         </Grid>
-        <Snackbar
-            anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-            }}
-            open={open}
-            autoHideDuration={6000}
-            message="Please make sure all nodes are in complete state for given workflow."
-            action={
-                <React.Fragment>
-                    <Button color="primary" size="small" onClick={onMessageHide}>
-                        {selectedWorkflow && <Link style={{ color: 'white' }} to={`/flow/${selectedWorkflow.id}`}>
-                            {selectedWorkflow.title}
-                        </Link>}
-                    </Button>
-                    <IconButton size="small" aria-label="close" color="inherit" onClick={onMessageHide}>
-                        <CloseIcon fontSize="small" />
-                    </IconButton>
-                </React.Fragment>
-            }
-        />
+        <LazyLoadingComponent>
+            <SnackNotification open={open} hide={() => onMessageHide()} selectedWorkflow={selectedWorkflow} />
+        </LazyLoadingComponent>
+
     </>;
 
 });

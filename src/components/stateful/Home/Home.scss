@@ -13,6 +13,8 @@
     margin: 20px;
 
     .card {
+      height: 150px;
+      min-width: 227px;
       a {
         color: #444444;
       }
@@ -37,7 +39,7 @@
       }
 
       &:hover {
-        box-shadow: 0 2px 2px 2px #999;
+        box-shadow: 0 1px 4px 0 #000000;
       }
     }
   }
